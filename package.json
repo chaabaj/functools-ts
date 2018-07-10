@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "scripts": {
     "compile": "tsc",
-    "build": "rm -rf dist && tsc"
+    "build": "rm -rf dist && tsc && npm run build_js",
+    "list": "tsc --listFiles",
+    "build_js": "tsc -p tsconfig_js.json && cp src/*.d.ts dist/"
   },
   "devDependencies": {
     "mocha": "^5.2.0",
