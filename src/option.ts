@@ -1,7 +1,7 @@
-import { F1, Lazy } from "./function";
-import { List } from "./types";
+import { F1, Lazy } from "./function"
+import { List } from "./types"
 
-export type Option<A> = A | null | undefined;
+export type Option<A> = A | null | undefined
 
 export const Option = {
   map: <A, B>(value: Option<A>, f: F1<A, B>): Option<B> =>
@@ -23,16 +23,16 @@ export const Option = {
 
   // optimized version of sequence
   sequence: <A>(list: List<Option<A>>): Option<List<A>> => {
-    let i = 0;
-    let length = list.length;
-    let res: List<A> = [];
+    let i = 0
+    let length = list.length
+    let res: List<A> = []
 
     while (i < length) {
-      const current = list[i];
-      if (Option.isEmpty(current)) return null;
-      res = [...res, current];
-      i++;
+      const current = list[i]
+      if (Option.isEmpty(current)) return null
+      res = [...res, current]
+      i++
     }
-    return res;
+    return res
   }
-};
+}

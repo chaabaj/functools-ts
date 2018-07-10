@@ -1,5 +1,5 @@
-import { F1 } from "./function";
-import { Option } from "./option";
+import { F1 } from "./function"
+import { Option } from "./option"
 
 export enum RemoteDataStatus {
   Loaded = "Loaded",
@@ -9,42 +9,42 @@ export enum RemoteDataStatus {
 }
 
 export interface Loaded<A> {
-  type: RemoteDataStatus.Loaded;
-  data: A;
+  type: RemoteDataStatus.Loaded
+  data: A
 }
 export const Data = <A>(data: A): Loaded<A> => ({
   type: RemoteDataStatus.Loaded,
   data
-});
+})
 
 export interface Pending {
-  type: RemoteDataStatus.Pending;
+  type: RemoteDataStatus.Pending
 }
 export const Pending = <A>(): RemoteData<A> => ({
   type: RemoteDataStatus.Pending
-});
+})
 
 export interface Failed {
-  type: RemoteDataStatus.Failed;
+  type: RemoteDataStatus.Failed
 }
 export const Failed = <A>(): RemoteData<A> => ({
   type: RemoteDataStatus.Failed
-});
+})
 
 export interface Unloaded {
-  type: RemoteDataStatus.Unloaded;
+  type: RemoteDataStatus.Unloaded
 }
 export const Unloaded = <A>(): RemoteData<A> => ({
   type: RemoteDataStatus.Unloaded
-});
+})
 
-export type RemoteData<A> = Unloaded | Pending | Failed | Loaded<A>;
+export type RemoteData<A> = Unloaded | Pending | Failed | Loaded<A>
 
 interface RemoteDataCases<A, B> {
-  Loaded: (a: A) => B;
-  Pending: () => B;
-  Failed: () => B;
-  Unloaded: () => B;
+  Loaded: (a: A) => B
+  Pending: () => B
+  Failed: () => B
+  Unloaded: () => B
 }
 
 export const RemoteData = {
@@ -63,13 +63,13 @@ export const RemoteData = {
   match: <A, B>(rd: RemoteData<A>, cases: RemoteDataCases<A, B>): B => {
     switch (rd.type) {
       case RemoteDataStatus.Loaded:
-        return cases.Loaded(rd.data);
+        return cases.Loaded(rd.data)
       case RemoteDataStatus.Pending:
-        return cases.Pending();
+        return cases.Pending()
       case RemoteDataStatus.Failed:
-        return cases.Failed();
+        return cases.Failed()
       case RemoteDataStatus.Unloaded:
-        return cases.Unloaded();
+        return cases.Unloaded()
     }
   },
 
@@ -91,4 +91,4 @@ export const RemoteData = {
       Failed: () => "Failed",
       Unloaded: () => "Unloaded"
     })
-};
+}

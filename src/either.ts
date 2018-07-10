@@ -1,37 +1,37 @@
-import { Option } from "./option";
-import { F1, Lazy, F2, F3, F4, F5, F6 } from "./function";
-import { List } from "./types";
+import { Option } from "./option"
+import { F1, Lazy, F2, F3, F4, F5, F6 } from "./function"
+import { List } from "./types"
 
 export type Right<A> = {
-  isRight: true;
-  isLeft: false;
-  value: A;
-};
+  isRight: true
+  isLeft: false
+  value: A
+}
 
 export type Left<E> = {
-  isRight: false;
-  isLeft: true;
-  value: E;
-};
+  isRight: false
+  isLeft: true
+  value: E
+}
 
-export type Either<E, A> = Left<E> | Right<A>;
+export type Either<E, A> = Left<E> | Right<A>
 
 export const Right = <E, A>(value: A): Either<E, A> => ({
   isLeft: false,
   isRight: true,
   value
-});
+})
 
 export const Left = <E, A>(error: E): Either<E, A> => ({
   isLeft: true,
   isRight: false,
   value: error
-});
+})
 
 type EitherCases<E, A, B> = {
-  Right: (x: A) => B;
-  Left: (error: E) => B;
-};
+  Right: (x: A) => B
+  Left: (error: E) => B
+}
 
 export const Either = {
   isRight: <E, A>(either: Either<E, A>): either is Right<A> => either.isRight,
@@ -77,17 +77,17 @@ export const Either = {
     Either.isRight(either) ? f(either.value) : ((null as any) as void),
 
   sequence: <E, A>(list: List<Either<E, A>>): Either<E, List<A>> => {
-    let i = 0;
-    let length = list.length;
-    let res: List<A> = [];
+    let i = 0
+    let length = list.length
+    let res: List<A> = []
 
     while (i < length) {
-      const current = list[i];
-      if (Either.isLeft(current)) return current;
-      res = [...res, current.value];
-      i++;
+      const current = list[i]
+      if (Either.isLeft(current)) return current
+      res = [...res, current.value]
+      i++
     }
-    return Right(res);
+    return Right(res)
   },
 
   left: <E, A>(either: Either<E, A>): Option<E> =>
@@ -150,4 +150,4 @@ export const Either = {
     Either.flatMap5(ea, eb, ec, ed, eh, (a, b, c, d, h) =>
       Either.flatMap(eg, g => f(a, b, c, d, h, g))
     )
-};
+}
