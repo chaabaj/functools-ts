@@ -53,6 +53,14 @@ export var RemoteData = {
     },
     data: function (rd) {
         return RemoteData.loaded(rd) ? rd.data : null;
+    },
+    toString: function (rd) {
+        return RemoteData.match(rd, {
+            Loaded: function (x) { return "Loaded(" + x + ")"; },
+            Pending: function () { return "Pending"; },
+            Failed: function () { return "Failed"; },
+            Unloaded: function () { return "Unloaded"; }
+        });
     }
 };
 //# sourceMappingURL=remote-data.js.map

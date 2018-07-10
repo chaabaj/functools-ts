@@ -46,7 +46,7 @@ export var Either = {
             var current = list[i];
             if (Either.isLeft(current))
                 return current;
-            res = res.concat([current.value]);
+            res.push(current.value);
             i++;
         }
         return Right(res);

@@ -23,7 +23,7 @@ export var Option = {
             var current = list[i];
             if (Option.isEmpty(current))
                 return null;
-            res = res.concat([current]);
+            res.push(current);
             i++;
         }
         return res;

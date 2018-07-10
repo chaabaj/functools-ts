@@ -38,5 +38,6 @@ export declare const RemoteData: {
     match: <A, B>(rd: RemoteData<A>, cases: RemoteDataCases<A, B>) => B;
     map: <A, B>(rd: RemoteData<A>, f: F1<A, B>) => RemoteData<B>;
     data: <A>(rd: RemoteData<A>) => Option<A>;
+    toString: <A>(rd: RemoteData<A>) => string;
 };
 export {};

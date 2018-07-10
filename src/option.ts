@@ -25,12 +25,12 @@ export const Option = {
   sequence: <A>(list: List<Option<A>>): Option<List<A>> => {
     let i = 0
     let length = list.length
-    let res: List<A> = []
+    let res: A[] = []
 
     while (i < length) {
       const current = list[i]
       if (Option.isEmpty(current)) return null
-      res = [...res, current]
+      res.push(current)
       i++
     }
     return res

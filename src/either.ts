@@ -79,12 +79,12 @@ export const Either = {
   sequence: <E, A>(list: List<Either<E, A>>): Either<E, List<A>> => {
     let i = 0
     let length = list.length
-    let res: List<A> = []
+    let res: A[] = []
 
     while (i < length) {
       const current = list[i]
       if (Either.isLeft(current)) return current
-      res = [...res, current.value]
+      res.push(current.value)
       i++
     }
     return Right(res)
