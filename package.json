@@ -1,0 +1,14 @@
+{
+  "name": "ts-functools",
+  "description": "functional for typescript",
+  "version": "0.0.1",
+  "scripts": {
+    "compile": "tsc",
+    "build": "rm -rf dist && tsc"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "prettier": "^1.13.7",
+    "typescript": "^2.9.2"
+  }
+}
