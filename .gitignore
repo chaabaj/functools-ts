@@ -1,1 +1,3 @@
 node_modules/
+./tsconfig.json
+./tsconfig_js.json

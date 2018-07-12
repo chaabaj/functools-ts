@@ -1,51 +1,24 @@
-export var View = {
-    create: function (items, start, end) {
-        if (end === void 0) { end = items.length; }
-        return ({
-            start: start,
-            end: end,
-            items: items
-        });
-    },
-    at: function (view, index) {
-        return view.items[view.start + index];
-    },
-    filter: function (view, f) {
-        var arr = [];
-        var length = view.end - view.start;
-        var start = view.start;
-        for (var i = start; i < length; i++) {
-            var item = view.items[start + i];
-            if (f(item))
-                arr.push(item);
+export var ListView = function (start, end, items) {
+    var self = {
+        start: start,
+        end: end,
+        at: function (index) { return (start + index >= end ? null : items[start + index]); },
+        forEach: function (f) {
+            var length = self.end - self.start;
+            for (var i = start; i < length; i++)
+                f(items[start + i]);
+        },
+        foldLeft: function (f, zero) {
+            var acc = zero;
+            var length = self.end - self.start;
+            var start = self.start;
+            for (var i = start; i < length; i++) {
+                var item = items[start + i];
+                acc = f(item, acc);
+            }
+            return acc;
         }
-        return arr;
-    },
-    forEach: function (view, f) {
-        var length = view.end - view.start;
-        var start = view.start;
-        for (var i = start; i < length; i++)
-            f(view.items[start + i]);
-    },
-    map: function (view, f) {
-        var arr = [];
-        var length = view.end - view.start;
-        var start = view.start;
-        for (var i = start; i < length; i++) {
-            var item = view.items[start + i];
-            arr.push(f(item));
-        }
-        return arr;
-    },
-    foldLeft: function (view, f, zero) {
-        var acc = zero;
-        var length = view.end - view.start;
-        var start = view.start;
-        for (var i = start; i < length; i++) {
-            var item = view.items[start + i];
-            acc = f(item, acc);
-        }
-        return acc;
-    }
+    };
+    return self;
 };
 //# sourceMappingURL=view.js.map
