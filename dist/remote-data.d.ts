@@ -10,7 +10,7 @@ export interface Loaded<A> {
     type: RemoteDataStatus.Loaded;
     data: A;
 }
-export declare const Data: <A>(data: A) => Loaded<A>;
+export declare const Loaded: <A>(data: A) => Loaded<A>;
 export interface Pending {
     type: RemoteDataStatus.Pending;
 }
