@@ -1,13 +1,13 @@
 import { List } from "./types"
 import { Option } from "./option"
-import { F1, F2 } from "./function"
+import { F2, F3 } from "./function"
 
 export interface View<A> {
   start: number
   end: number
   at(index: number): Option<A>
-  forEach(f: F1<A, void>): void
-  foldLeft<B>(f: F2<A, B, B>, zero: B): B
+  forEach(f: F2<A, number, void>): void
+  foldLeft<B>(f: F3<B, A, number, B>, zero: B): B
 }
 
 export const ListView = <A>(
@@ -18,20 +18,17 @@ export const ListView = <A>(
   const self = {
     start,
     end,
-    at: (index: number) => (start + index >= end ? null : items[start + index]),
-    forEach: (f: F1<A, void>): void => {
-      let length = self.end - self.start
-
-      for (let i = start; i < length; i++) f(items[start + i])
+    at: (index: number) =>
+      self.start + index >= end ? null : items[self.start + index],
+    forEach: (f: F2<A, number, void>): void => {
+      for (let i = self.start; i <= self.end; i++) f(items[i], i - self.start)
     },
-    foldLeft: <B>(f: F2<A, B, B>, zero: B): B => {
+    foldLeft: <B>(f: F3<B, A, number, B>, zero: B): B => {
       let acc = zero
-      let length = self.end - self.start
-      let start = self.start
 
-      for (let i = start; i < length; i++) {
-        const item = items[start + i]
-        acc = f(item, acc)
+      for (let i = self.start; i <= self.end; i++) {
+        const item = items[i]
+        acc = f(acc, item, i - self.start)
       }
       return acc
     }

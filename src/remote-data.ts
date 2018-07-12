@@ -12,7 +12,7 @@ export interface Loaded<A> {
   type: RemoteDataStatus.Loaded
   data: A
 }
-export const Data = <A>(data: A): Loaded<A> => ({
+export const Loaded = <A>(data: A): Loaded<A> => ({
   type: RemoteDataStatus.Loaded,
   data
 })
@@ -75,7 +75,7 @@ export const RemoteData = {
 
   map: <A, B>(rd: RemoteData<A>, f: F1<A, B>): RemoteData<B> =>
     RemoteData.match(rd, {
-      Loaded: x => Data(f(x)),
+      Loaded: x => Loaded(f(x)),
       Pending: () => Pending<B>(),
       Failed: () => Failed<B>(),
       Unloaded: () => Unloaded<B>()

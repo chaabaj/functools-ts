@@ -1,4 +1,6 @@
-export var ListView = function (start, end, items) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ListView = function (start, end, items) {
     var self = {
         start: start,
         end: end,
@@ -14,7 +16,7 @@ export var ListView = function (start, end, items) {
             var start = self.start;
             for (var i = start; i < length; i++) {
                 var item = items[start + i];
-                acc = f(item, acc);
+                acc = f(acc, item);
             }
             return acc;
         }
