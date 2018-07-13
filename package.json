@@ -1,7 +1,13 @@
 {
-  "name": "ts-functools",
-  "description": "functional for typescript",
-  "version": "0.0.1",
+  "name": "functools-ts",
+  "description": "minimal functional tools for typescript",
+  "keywords": [
+    "typescript",
+    "functional programming"
+  ],
+  "main": "dist/index.ts",
+  "typings": "dist/index.d.ts",
+  "version": "0.0.2",
   "repository": "git@bitbucket.org:chaaba_j/ts-functools.git",
   "author": "Jalal Chaabane",
   "scripts": {
