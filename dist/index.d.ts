@@ -9,4 +9,5 @@ import { Validation } from "./validation";
 import { View, ListView } from "./view";
 import { Filter } from "./filter";
 import { FormField, Valid, Invalid } from "./form";
-export { compose, pipe, curry1, curry2, Either, Left, Right, Option, RemoteData, Loaded, Unloaded, Failed, Pending, List, Filter, Validation, View, ListView, FormField, Valid, Invalid };
+import { Success, Failure } from "./result";
+export { compose, pipe, curry1, curry2, Either, Left, Right, Option, RemoteData, Loaded, Unloaded, Failed, Pending, List, Filter, Validation, View, ListView, FormField, Valid, Invalid, Success, Failure };

@@ -9,6 +9,7 @@ import { Validation } from "./validation"
 import { View, ListView } from "./view"
 import { Filter } from "./filter"
 import { FormField, Valid, Invalid } from "./form"
+import { Success, Failure } from "./result";
 
 export {
   compose,
@@ -31,5 +32,7 @@ export {
   ListView,
   FormField,
   Valid,
-  Invalid
+  Invalid,
+  Success,
+  Failure
 }
