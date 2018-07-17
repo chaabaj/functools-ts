@@ -14,30 +14,31 @@ export declare const Loaded: <A>(data: A) => Loaded<A>;
 export interface Pending {
     type: RemoteDataStatus.Pending;
 }
-export declare const Pending: <A>() => RemoteData<A>;
-export interface Failed {
+export declare const Pending: <A, E>() => RemoteData<E, A>;
+export interface Failed<E> {
     type: RemoteDataStatus.Failed;
+    error: E;
 }
-export declare const Failed: <A>() => RemoteData<A>;
+export declare const Failed: <E, A>(error: E) => RemoteData<E, A>;
 export interface Unloaded {
     type: RemoteDataStatus.Unloaded;
 }
-export declare const Unloaded: <A>() => RemoteData<A>;
-export declare type RemoteData<A> = Unloaded | Pending | Failed | Loaded<A>;
-interface RemoteDataCases<A, B> {
+export declare const Unloaded: <E, A>() => RemoteData<E, A>;
+export declare type RemoteData<E, A> = Unloaded | Pending | Failed<E> | Loaded<A>;
+interface RemoteDataCases<E, A, B> {
     Loaded: (a: A) => B;
     Pending: () => B;
-    Failed: () => B;
+    Failed: (error: E) => B;
     Unloaded: () => B;
 }
 export declare const RemoteData: {
-    loaded: <A>(rd: RemoteData<A>) => rd is Loaded<A>;
-    pending: <A>(rd: RemoteData<A>) => rd is Pending;
-    failed: <A>(rd: RemoteData<A>) => rd is Failed;
-    unloaded: <A>(rd: RemoteData<A>) => rd is Unloaded;
-    match: <A, B>(rd: RemoteData<A>, cases: RemoteDataCases<A, B>) => B;
-    map: <A, B>(rd: RemoteData<A>, f: F1<A, B>) => RemoteData<B>;
-    data: <A>(rd: RemoteData<A>) => Option<A>;
-    toString: <A>(rd: RemoteData<A>) => string;
+    loaded: <E, A>(rd: RemoteData<E, A>) => rd is Loaded<A>;
+    pending: <E, A>(rd: RemoteData<E, A>) => rd is Pending;
+    failed: <E, A>(rd: RemoteData<E, A>) => rd is Failed<E>;
+    unloaded: <E, A>(rd: RemoteData<E, A>) => rd is Unloaded;
+    match: <E, A, B>(rd: RemoteData<E, A>, cases: RemoteDataCases<E, A, B>) => B;
+    map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>) => RemoteData<E, B>;
+    data: <E, A>(rd: RemoteData<E, A>) => Option<A>;
+    toString: <E, A>(rd: RemoteData<E, A>) => string;
 };
 export {};

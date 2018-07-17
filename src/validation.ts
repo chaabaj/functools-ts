@@ -1,12 +1,27 @@
 import { F1 } from "./function"
-import { Option } from "./option"
-import { Left, Right, Either } from "./either"
+import { FormField, Valid, Invalid } from "./form"
 
-export type Validation<E, A> = F1<A, Option<E>>
+export type Validation<E, A> = F1<A, FormField<E, A>>
 
 export const Validation = {
-  validate: <A, E>(value: A, f: Validation<E, A>): Either<E, A> => {
-    const res = f(value)
-    return Option.isDefined(res) ? Left(res) : Right(value)
+  combine: <E, A>(
+    ...validations: Validation<E, A>[]
+  ): Validation<E, A> => value => {
+    let i = 0
+    const length = validations.length
+    let current: FormField<E, A> = Valid(value)
+
+    while (i < length) {
+      current = FormField.match(validations[i](current.value), {
+        Valid: _ => current,
+        Invalid: (result, errors) =>
+          FormField.match(current, {
+            Valid: _ => Invalid(result, errors),
+            Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2])
+          })
+      })
+      i++
+    }
+    return current
   }
 }

@@ -12,7 +12,9 @@ describe("remote data", () => {
   it("toString", () => {
     expect(RemoteData.toString(Loaded(42))).eq("Loaded(42)")
     expect(RemoteData.toString(Pending())).eq("Pending")
-    expect(RemoteData.toString(Failed())).eq("Failed")
+    expect(RemoteData.toString(Failed(new Error("some msg")))).eq(
+      "Failed(Error: some msg)"
+    )
     expect(RemoteData.toString(Unloaded())).eq("Unloaded")
   })
 

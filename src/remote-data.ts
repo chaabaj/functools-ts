@@ -20,75 +20,80 @@ export const Loaded = <A>(data: A): Loaded<A> => ({
 export interface Pending {
   type: RemoteDataStatus.Pending
 }
-export const Pending = <A>(): RemoteData<A> => ({
+export const Pending = <A, E>(): RemoteData<E, A> => ({
   type: RemoteDataStatus.Pending
 })
 
-export interface Failed {
+export interface Failed<E> {
   type: RemoteDataStatus.Failed
+  error: E
 }
-export const Failed = <A>(): RemoteData<A> => ({
-  type: RemoteDataStatus.Failed
+export const Failed = <E, A>(error: E): RemoteData<E, A> => ({
+  type: RemoteDataStatus.Failed,
+  error
 })
 
 export interface Unloaded {
   type: RemoteDataStatus.Unloaded
 }
-export const Unloaded = <A>(): RemoteData<A> => ({
+export const Unloaded = <E, A>(): RemoteData<E, A> => ({
   type: RemoteDataStatus.Unloaded
 })
 
-export type RemoteData<A> = Unloaded | Pending | Failed | Loaded<A>
+export type RemoteData<E, A> = Unloaded | Pending | Failed<E> | Loaded<A>
 
-interface RemoteDataCases<A, B> {
+interface RemoteDataCases<E, A, B> {
   Loaded: (a: A) => B
   Pending: () => B
-  Failed: () => B
+  Failed: (error: E) => B
   Unloaded: () => B
 }
 
 export const RemoteData = {
-  loaded: <A>(rd: RemoteData<A>): rd is Loaded<A> =>
+  loaded: <E, A>(rd: RemoteData<E, A>): rd is Loaded<A> =>
     rd.type === RemoteDataStatus.Loaded,
 
-  pending: <A>(rd: RemoteData<A>): rd is Pending =>
+  pending: <E, A>(rd: RemoteData<E, A>): rd is Pending =>
     rd.type === RemoteDataStatus.Pending,
 
-  failed: <A>(rd: RemoteData<A>): rd is Failed =>
+  failed: <E, A>(rd: RemoteData<E, A>): rd is Failed<E> =>
     rd.type === RemoteDataStatus.Failed,
 
-  unloaded: <A>(rd: RemoteData<A>): rd is Unloaded =>
+  unloaded: <E, A>(rd: RemoteData<E, A>): rd is Unloaded =>
     rd.type === RemoteDataStatus.Unloaded,
 
-  match: <A, B>(rd: RemoteData<A>, cases: RemoteDataCases<A, B>): B => {
+  match: <E, A, B>(
+    rd: RemoteData<E, A>,
+    cases: RemoteDataCases<E, A, B>
+  ): B => {
     switch (rd.type) {
       case RemoteDataStatus.Loaded:
         return cases.Loaded(rd.data)
       case RemoteDataStatus.Pending:
         return cases.Pending()
       case RemoteDataStatus.Failed:
-        return cases.Failed()
+        return cases.Failed(rd.error)
       case RemoteDataStatus.Unloaded:
         return cases.Unloaded()
     }
   },
 
-  map: <A, B>(rd: RemoteData<A>, f: F1<A, B>): RemoteData<B> =>
-    RemoteData.match(rd, {
+  map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>): RemoteData<E, B> =>
+    RemoteData.match<E, A, RemoteData<E, B>>(rd, {
       Loaded: x => Loaded(f(x)),
-      Pending: () => Pending<B>(),
-      Failed: () => Failed<B>(),
-      Unloaded: () => Unloaded<B>()
+      Pending: () => Pending(),
+      Failed: e => Failed(e),
+      Unloaded: () => Unloaded()
     }),
 
-  data: <A>(rd: RemoteData<A>): Option<A> =>
+  data: <E, A>(rd: RemoteData<E, A>): Option<A> =>
     RemoteData.loaded(rd) ? rd.data : null,
 
-  toString: <A>(rd: RemoteData<A>): string =>
+  toString: <E, A>(rd: RemoteData<E, A>): string =>
     RemoteData.match(rd, {
       Loaded: x => `Loaded(${x})`,
       Pending: () => "Pending",
-      Failed: () => "Failed",
+      Failed: error => `Failed(${error.toString()})`,
       Unloaded: () => "Unloaded"
     })
 }

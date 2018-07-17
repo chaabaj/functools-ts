@@ -12,8 +12,9 @@ export var Loaded = function (data) { return ({
 export var Pending = function () { return ({
     type: RemoteDataStatus.Pending
 }); };
-export var Failed = function () { return ({
-    type: RemoteDataStatus.Failed
+export var Failed = function (error) { return ({
+    type: RemoteDataStatus.Failed,
+    error: error
 }); };
 export var Unloaded = function () { return ({
     type: RemoteDataStatus.Unloaded
@@ -38,7 +39,7 @@ export var RemoteData = {
             case RemoteDataStatus.Pending:
                 return cases.Pending();
             case RemoteDataStatus.Failed:
-                return cases.Failed();
+                return cases.Failed(rd.error);
             case RemoteDataStatus.Unloaded:
                 return cases.Unloaded();
         }
@@ -47,7 +48,7 @@ export var RemoteData = {
         return RemoteData.match(rd, {
             Loaded: function (x) { return Loaded(f(x)); },
             Pending: function () { return Pending(); },
-            Failed: function () { return Failed(); },
+            Failed: function (e) { return Failed(e); },
             Unloaded: function () { return Unloaded(); }
         });
     },
@@ -58,7 +59,7 @@ export var RemoteData = {
         return RemoteData.match(rd, {
             Loaded: function (x) { return "Loaded(" + x + ")"; },
             Pending: function () { return "Pending"; },
-            Failed: function () { return "Failed"; },
+            Failed: function (error) { return "Failed(" + error.toString() + ")"; },
             Unloaded: function () { return "Unloaded"; }
         });
     }

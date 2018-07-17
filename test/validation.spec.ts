@@ -1,14 +1,14 @@
 import { Validation } from "../src/validation"
 import { expect } from "chai"
 import { describe, it } from "mocha"
-import { Either } from "../src/either"
+import { Valid, Invalid } from "../src/form"
 
 describe("validation", () => {
   it("validate", () => {
-    const res = Validation.validate(
-      "0123456789",
-      s => (s.localeCompare("0123456789") ? null : new Error("Invalid"))
+    const validation = Validation.combine(
+      (a: number) => Valid(a),
+      a => (a > 5 ? Valid(a) : Invalid(a, ["must be greater than 5"]))
     )
-    expect(Either.isLeft(res)).eq(true)
+    expect(validation(4)).eql(Invalid(4, ["must be greater than 5"]))
   })
 })

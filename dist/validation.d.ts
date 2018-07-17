@@ -1,7 +1,6 @@
 import { F1 } from "./function";
-import { Option } from "./option";
-import { Either } from "./either";
-export declare type Validation<E, A> = F1<A, Option<E>>;
+import { FormField } from "./form";
+export declare type Validation<E, A> = F1<A, FormField<E, A>>;
 export declare const Validation: {
-    validate: <A, E>(value: A, f: F1<A, Option<E>>) => Either<E, A>;
+    combine: <E, A>(...validations: F1<A, FormField<E, A>>[]) => F1<A, FormField<E, A>>;
 };
