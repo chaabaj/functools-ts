@@ -1,6 +1,6 @@
 import { Option } from "./option"
 import { F1, Lazy, F2, F3, F4, F5, F6 } from "./function"
-import { List } from "./types"
+import { List } from "./list"
 
 export type Right<A> = {
   isRight: true

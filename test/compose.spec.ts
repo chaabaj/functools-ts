@@ -1,7 +1,7 @@
 import { compose } from "../src/compose"
 import { expect } from "chai"
 import { describe, it } from "mocha"
-import { List } from "../src/types"
+import { List } from "../src/list"
 
 describe("compose", () => {
   it("test compose", () => {

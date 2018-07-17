@@ -2,4 +2,4 @@ export SHELLOPTS
 set -o igncr
 
 cp ./config/test/* ./
-npm run test
+./node_modules/.bin/mocha --require ts-node/register ./test/*.spec.ts

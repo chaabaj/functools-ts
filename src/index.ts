@@ -4,10 +4,11 @@ import { curry1, curry2 } from "./curry"
 import { Either, Left, Right } from "./either"
 import { Option } from "./option"
 import { RemoteData, Loaded, Unloaded, Failed, Pending } from "./remote-data"
-import { List } from "./types"
+import { List } from "./list"
 import { Validation } from "./validation"
 import { View, ListView } from "./view"
 import { Filter } from "./filter"
+import { FormField, Valid, Invalid } from "./form"
 
 export {
   compose,
@@ -27,5 +28,8 @@ export {
   Filter,
   Validation,
   View,
-  ListView
+  ListView,
+  FormField,
+  Valid,
+  Invalid
 }

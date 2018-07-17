@@ -7,14 +7,14 @@
   ],
   "main": "dist/index.ts",
   "typings": "dist/index.d.ts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": "git@bitbucket.org:chaaba_j/ts-functools.git",
   "author": "Jalal Chaabane",
   "scripts": {
     "compile": "tsc",
     "build": "build.sh",
     "list": "tsc --listFiles",
-    "test": "./node_modules/.bin/mocha --require ts-node/register ./test/*.spec.ts"
+    "test": "test.sh"
   },
   "devDependencies": {
     "ts-node": "^7.0.0",

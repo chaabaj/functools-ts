@@ -1,4 +1,4 @@
-import { List } from "./types"
+import { List } from "./list"
 
 export enum FormFieldType {
   Valid = "Valid",

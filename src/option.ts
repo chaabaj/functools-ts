@@ -1,5 +1,5 @@
 import { F1, Lazy } from "./function"
-import { List } from "./types"
+import { List } from "./list"
 
 export type Option<A> = A | null | undefined
 
