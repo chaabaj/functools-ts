@@ -9,11 +9,14 @@ import { Validation } from "./validation"
 import { View, ListView } from "./view"
 import { Filter } from "./filter"
 import { FormField, Valid, Invalid } from "./form"
-import { Success, Failure } from "./result";
+import { Success, Failure } from "./result"
+import { asyncPipe, asyncGroup } from "./async-pipe"
 
 export {
   compose,
   pipe,
+  asyncPipe,
+  asyncGroup,
   curry1,
   curry2,
   Either,
