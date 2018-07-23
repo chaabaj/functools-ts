@@ -2,7 +2,7 @@ import { Left, Right, Either } from "../src/either"
 import { expect } from "chai"
 import { describe, it } from "mocha"
 import { pipe } from "../src/pipe"
-import { List } from "../src/types"
+import { List } from "../src/list"
 
 describe("either", () => {
   it("is right", () => {

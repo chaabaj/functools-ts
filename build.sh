@@ -1,8 +1,5 @@
-export SHELLOPTS
-set -o igncr
-
 rm -rf dist
 cp ./config/build/* ./
 ./node_modules/.bin/tsc
-./node_modules/.bin/tsc -p tsconfig_js.json 
+./node_modules/.bin/tsc -p tsconfig_js.json
 cp src/*.d.ts dist/

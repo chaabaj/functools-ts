@@ -5,16 +5,16 @@
     "typescript",
     "functional programming"
   ],
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": "git@bitbucket.org:chaaba_j/ts-functools.git",
   "author": "Jalal Chaabane",
   "scripts": {
     "compile": "tsc",
-    "build": "build.sh",
+    "build": "./build.sh",
     "list": "tsc --listFiles",
-    "test": "test.sh"
+    "test": "./test.sh"
   },
   "devDependencies": {
     "ts-node": "^7.0.0",
