@@ -11,4 +11,5 @@ import { Filter } from "./filter";
 import { FormField, Valid, Invalid } from "./form";
 import { Success, Failure } from "./result";
 import { asyncPipe, asyncGroup } from "./async-pipe";
-export { compose, pipe, asyncPipe, asyncGroup, curry1, curry2, Either, Left, Right, Option, RemoteData, Loaded, Unloaded, Failed, Pending, List, Filter, Validation, View, ListView, FormField, Valid, Invalid, Success, Failure };
+import { group } from "./group";
+export { compose, pipe, asyncPipe, asyncGroup, curry1, curry2, Either, Left, Right, Option, RemoteData, Loaded, Unloaded, Failed, Pending, List, Filter, Validation, View, ListView, FormField, Valid, Invalid, Success, Failure, group };

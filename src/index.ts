@@ -11,6 +11,7 @@ import { Filter } from "./filter"
 import { FormField, Valid, Invalid } from "./form"
 import { Success, Failure } from "./result"
 import { asyncPipe, asyncGroup } from "./async-pipe"
+import { group } from "./group";
 
 export {
   compose,
@@ -37,5 +38,6 @@ export {
   Valid,
   Invalid,
   Success,
-  Failure
+  Failure,
+  group
 }
