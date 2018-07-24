@@ -67,7 +67,43 @@ RemoteData.match(rd, {
 })
 ```
 
+### Form field
 
+Data structure to represent data with validation
 
+```typescript
+type FormField<E, A> = Valid<A> | Invalid<E, A>
+```
 
+```typescript
+import { FormField, Validation } from "functools-ts"
 
+const field: FormField<string, number> = Valid(42)
+
+FormField.match(field, {
+  Valid: x => console.log(x),
+  Invalid (x, errors) => console.log(errors)
+})
+
+// Let's use Validation
+
+const validateNumber = Validation.combine<string, number>(
+  x => x > 5 ? Valid(x) : Invalid(x, ["must be greater than 5"]),
+  x => x % 2 === 0 ? Valid(x) : Invalid(x, ["must be divisible by 2"])
+)
+
+validateNumber(5) // Invalid(5, ["must be divisible by 2"])
+validateNumber(3) // Invalid(3, ["must be greater than 5", "must be divisible by 2"])
+validateNumber(6) // Valid(6)
+
+```
+
+### View (experimental)
+
+Allow to view a range of the array
+
+```typescript
+const v = ListView(0, 2, [1, 2, 3, 4, 5])
+v.at(0) // 2
+v.foldLeft((acc, item) => acc + item, 0)
+```
