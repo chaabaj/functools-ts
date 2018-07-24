@@ -107,3 +107,33 @@ const v = ListView(0, 2, [1, 2, 3, 4, 5])
 v.at(0) // 2
 v.foldLeft((acc, item) => acc + item, 0)
 ```
+
+### Async pipe
+
+Write pipe allowing asynchronous function 
+
+```typescript
+const f = asyncPipe(
+  (x: number) => x + 42,
+  x => new Promise<number>(resolve => resolve(x)),
+  x => x + 4,
+  x => x + 4
+)
+f(4) // Promise<number>
+f(4).then(console.log) // 58
+```
+
+with async group (parallel operations)
+```typescript
+const f = asyncPipe(
+  asyncGroup((x: List<number>) => x.join(","), x => x.slice(2)),
+  asyncGroup(
+    ([a, _]) => a.repeat(2),
+    ([_, b]) => b.reduce((acc, n) => acc + n, 0)
+  ),
+  ([a, b]) => a + b
+)
+
+f([1, 2, 3, 4]).then(console.log) // "1,2,3,41,2,3,47"
+```
+
