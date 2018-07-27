@@ -7,7 +7,7 @@
   ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "repository": "git@bitbucket.org:chaaba_j/ts-functools.git",
   "author": "Jalal Chaabane",
   "scripts": {
