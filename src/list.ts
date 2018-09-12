@@ -46,7 +46,7 @@ export const List = {
     ),
 
   get: <A>(list: List<A>, where: Selector<A>): Option<A> =>
-    list.find((item, i) => match(item, where, i, list)),
+    list.find((item, i) => match(where, item, i, list)),
 
   contains: <A>(list: List<A>, item: A): boolean =>
     list.find(x => x === item) ? true : false,
