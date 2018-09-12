@@ -23,7 +23,7 @@ export var List = {
         });
     },
     get: function (list, where) {
-        return list.find(function (item, i) { return match(item, where, i, list); });
+        return list.find(function (item, i) { return match(where, item, i, list); });
     },
     contains: function (list, item) {
         return list.find(function (x) { return x === item; }) ? true : false;
