@@ -1,5 +1,5 @@
 var defer = function (f) { return setTimeout(f, 0); };
-export var asyncGroup = function () {
+var asyncGroup_ = function () {
     var tasks = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         tasks[_i] = arguments[_i];
@@ -8,6 +8,8 @@ export var asyncGroup = function () {
         return Promise.all(tasks.map(function (task) { return new Promise(function (resolve) { return resolve(task(value)); }); }));
     };
 };
+var asyncGroup = asyncGroup_;
+export { asyncGroup };
 export var asyncPipe = function () {
     var tasks = [];
     for (var _i = 0; _i < arguments.length; _i++) {

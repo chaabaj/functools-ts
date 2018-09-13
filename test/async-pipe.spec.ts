@@ -30,7 +30,10 @@ describe("async pipe", () => {
 
   it("mix async pipe and async group", () => {
     const f = asyncPipe(
-      asyncGroup((x: List<number>) => x.join(","), x => x.slice(2)),
+      asyncGroup(
+        (x: List<number>) => x.join(","),
+        x => x.slice(2)
+      ),
       asyncGroup(
         ([a, _]) => a.repeat(2),
         ([_, b]) => b.reduce((acc, n) => acc + n, 0)

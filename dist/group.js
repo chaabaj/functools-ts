@@ -6,7 +6,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-export var group = function () {
+var group_ = function () {
     var fns = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         fns[_i] = arguments[_i];
@@ -17,4 +17,6 @@ export var group = function () {
         }, {});
     };
 };
+var group = group_;
+export { group };
 //# sourceMappingURL=group.js.map
