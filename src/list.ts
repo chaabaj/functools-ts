@@ -30,7 +30,7 @@ const propsMatch = <U, T extends U>(record: T, partial: U) => {
 }
 
 const getNewValue = <T>(newValue: T | ((oldValue: T) => T), oldValue: T) =>
-  typeof newValue === "function" ? newValue(oldValue) : newValue
+  typeof newValue === "function" ? (newValue as any)(oldValue) : newValue
 
 interface ListCases<A, B> {
   Single(a: A): B

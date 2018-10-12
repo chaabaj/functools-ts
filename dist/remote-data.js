@@ -52,6 +52,17 @@ export var RemoteData = {
             Unloaded: function () { return Unloaded(); }
         });
     },
+    flatMap: function (rd, f) {
+        return RemoteData.match(rd, {
+            Loaded: function (x) { return f(x); },
+            Pending: function () { return Pending(); },
+            Failed: function (e) { return Failed(e); },
+            Unloaded: function () { return Unloaded(); }
+        });
+    },
+    map2: function (rd1, rd2, f) {
+        return RemoteData.flatMap(rd1, function (data1) { return RemoteData.map(rd2, function (data2) { return f(data1, data2); }); });
+    },
     data: function (rd) {
         return RemoteData.loaded(rd) ? rd.data : null;
     },

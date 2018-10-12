@@ -1,4 +1,4 @@
-import { F1 } from "./function"
+import { F1, F2 } from "./function"
 import { Option } from "./option"
 
 export enum RemoteDataStatus {
@@ -85,6 +85,18 @@ export const RemoteData = {
       Failed: e => Failed(e),
       Unloaded: () => Unloaded()
     }),
+
+  flatMap: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, RemoteData<E, B>>): RemoteData<E, B> =>
+    RemoteData.match<E, A, RemoteData<E, B>>(rd, {
+      Loaded: x => f(x),
+      Pending: () => Pending(),
+      Failed: e => Failed(e),
+      Unloaded: () => Unloaded()
+    }),
+
+  map2: <E, A, B, C>(rd1: RemoteData<E, A>, rd2: RemoteData<E, B>, f: F2<A, B, C>): RemoteData<E, C> =>
+    RemoteData.flatMap(rd1, data1 => RemoteData.map(rd2, data2 => f(data1, data2))),
+
 
   data: <E, A>(rd: RemoteData<E, A>): Option<A> =>
     RemoteData.loaded(rd) ? rd.data : null,

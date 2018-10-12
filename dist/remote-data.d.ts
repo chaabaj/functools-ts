@@ -1,4 +1,4 @@
-import { F1 } from "./function";
+import { F1, F2 } from "./function";
 import { Option } from "./option";
 export declare enum RemoteDataStatus {
     Loaded = "Loaded",
@@ -38,6 +38,8 @@ export declare const RemoteData: {
     unloaded: <E, A>(rd: RemoteData<E, A>) => rd is Unloaded;
     match: <E, A, B>(rd: RemoteData<E, A>, cases: RemoteDataCases<E, A, B>) => B;
     map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>) => RemoteData<E, B>;
+    flatMap: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, RemoteData<E, B>>) => RemoteData<E, B>;
+    map2: <E, A, B, C>(rd1: RemoteData<E, A>, rd2: RemoteData<E, B>, f: F2<A, B, C>) => RemoteData<E, C>;
     data: <E, A>(rd: RemoteData<E, A>) => Option<A>;
     toString: <E, A>(rd: RemoteData<E, A>) => string;
 };
