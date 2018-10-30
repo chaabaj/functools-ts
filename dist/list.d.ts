@@ -12,5 +12,6 @@ export declare const List: {
     get: <A>(list: ReadonlyArray<A>, where: Selector<A>) => Option<A>;
     contains: <A>(list: ReadonlyArray<A>, item: A) => boolean;
     match: <A, B>(list: ReadonlyArray<A>, cases: ListCases<A, B>) => B;
+    isList: <A>(maybeList: any) => maybeList is ReadonlyArray<A>;
 };
 export {};

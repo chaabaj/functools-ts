@@ -34,6 +34,7 @@ export var List = {
             : list.length === 1
                 ? cases.Single(list[0])
                 : cases.Cons(list[0], list.slice(1));
-    }
+    },
+    isList: function (maybeList) { return Array.isArray(maybeList); }
 };
 //# sourceMappingURL=list.js.map

@@ -56,5 +56,7 @@ export const List = {
       ? cases.Empty()
       : list.length === 1
         ? cases.Single(list[0])
-        : cases.Cons(list[0], list.slice(1))
+        : cases.Cons(list[0], list.slice(1)),
+
+  isList: <A>(maybeList: any): maybeList is List<A> => Array.isArray(maybeList)
 }
