@@ -1,4 +1,4 @@
-import { FormField, Valid, Invalid } from "./form";
+import { FormField, Valid, Invalid, Initial } from "./form";
 export var Validation = {
     combine: function () {
         var validations = [];
@@ -19,7 +19,7 @@ export var Validation = {
                             Initial: function (_) { return Invalid(result, errors); }
                         });
                     },
-                    Initial: function (x) { return Valid(x); }
+                    Initial: function (x) { return Initial(x); }
                 });
                 i++;
             }

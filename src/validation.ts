@@ -1,5 +1,5 @@
 import { F1 } from "./function"
-import { FormField, Valid, Invalid } from "./form"
+import { FormField, Valid, Invalid, Initial } from "./form"
 
 export type Validation<E, A> = F1<A, FormField<E, A>>
 
@@ -20,7 +20,7 @@ export const Validation = {
             Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2]),
             Initial: _ => Invalid(result, errors)
           }),
-        Initial: x => Valid(x)
+        Initial: x => Initial(x)
       })
       i++
     }

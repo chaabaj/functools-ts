@@ -62,5 +62,8 @@ export const FormField = {
       case FormFieldType.Initial:
         return cases.Initial(ff.value)
     }
-  }
+  },
+
+  isValidForm: (...fields: FormField<any, any>[]): boolean =>
+    fields.every(field => FormField.valid(field) || FormField.initial(field))
 }

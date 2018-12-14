@@ -31,5 +31,6 @@ export declare const FormField: {
     valid: <E, A>(ff: FormField<E, A>) => ff is Valid<A>;
     initial: <E, A>(ff: FormField<E, A>) => ff is Initial<A>;
     match: <E, A, B>(ff: FormField<E, A>, cases: FormFieldCases<E, A, B>) => B;
+    isValidForm: (...fields: FormField<any, any>[]) => boolean;
 };
 export {};

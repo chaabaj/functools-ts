@@ -36,6 +36,13 @@ export var FormField = {
             case FormFieldType.Initial:
                 return cases.Initial(ff.value);
         }
+    },
+    isValidForm: function () {
+        var fields = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            fields[_i] = arguments[_i];
+        }
+        return fields.every(function (field) { return FormField.valid(field) || FormField.initial(field); });
     }
 };
 //# sourceMappingURL=form.js.map
