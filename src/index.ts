@@ -8,7 +8,7 @@ import { List } from "./list"
 import { Validation } from "./validation"
 import { View, ListView } from "./view"
 import { Filter } from "./filter"
-import { FormField, Valid, Invalid } from "./form"
+import { FormField, Valid, Invalid, Untouched } from "./form"
 import { Success, Failure } from "./result"
 import { asyncPipe, asyncGroup } from "./async-pipe"
 import { group } from "./group";
@@ -38,6 +38,7 @@ export {
   FormField,
   Valid,
   Invalid,
+  Untouched,
   Success,
   Failure,
   group,
