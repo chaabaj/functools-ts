@@ -17,8 +17,10 @@ export const Validation = {
         Invalid: (result, errors) =>
           FormField.match(current, {
             Valid: _ => Invalid(result, errors),
-            Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2])
-          })
+            Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2]),
+            Initial: _ => Invalid(result, errors)
+          }),
+        Initial: (_) => current
       })
       i++
     }

@@ -2,7 +2,8 @@ import { List } from "./list"
 
 export enum FormFieldType {
   Valid = "Valid",
-  Invalid = "Invalid"
+  Invalid = "Invalid",
+  Initial = "Initial"
 }
 
 export interface Valid<A> {
@@ -25,11 +26,21 @@ export const Invalid = <E, A>(value: A, errors: List<E>): Invalid<E, A> => ({
   errors
 })
 
-export type FormField<E, A> = Valid<A> | Invalid<E, A>
+export interface Initial<A> {
+  type: FormFieldType.Initial,
+  value: A
+}
+export const Initial = <A>(value: A): Initial<A> => ({
+  type: FormFieldType.Initial,
+  value
+}) 
+
+export type FormField<E, A> = Valid<A> | Invalid<E, A> | Initial<A>
 
 interface FormFieldCases<E, A, B> {
   Valid(a: A): B
   Invalid(a: A, error: List<E>): B
+  Initial(a: A): B
 }
 
 export const FormField = {
@@ -39,12 +50,17 @@ export const FormField = {
   valid: <E, A>(ff: FormField<E, A>): ff is Valid<A> =>
     ff.type === FormFieldType.Valid,
 
+  initial: <E, A>(ff: FormField<E, A>): ff is Initial<A> =>
+    ff.type === FormFieldType.Initial,
+
   match: <E, A, B>(ff: FormField<E, A>, cases: FormFieldCases<E, A, B>): B => {
     switch (ff.type) {
       case FormFieldType.Valid:
         return cases.Valid(ff.value)
       case FormFieldType.Invalid:
         return cases.Invalid(ff.value, ff.errors)
+      case FormFieldType.Initial:
+        return cases.Initial(ff.value)
     }
   }
 }

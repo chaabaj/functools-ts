@@ -15,9 +15,11 @@ export var Validation = {
                     Invalid: function (result, errors) {
                         return FormField.match(current, {
                             Valid: function (_) { return Invalid(result, errors); },
-                            Invalid: function (_, errors2) { return Invalid(result, errors.concat(errors2)); }
+                            Invalid: function (_, errors2) { return Invalid(result, errors.concat(errors2)); },
+                            Initial: function (_) { return Invalid(result, errors); }
                         });
-                    }
+                    },
+                    Initial: function (_) { return current; }
                 });
                 i++;
             }

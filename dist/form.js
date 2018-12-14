@@ -2,6 +2,7 @@ export var FormFieldType;
 (function (FormFieldType) {
     FormFieldType["Valid"] = "Valid";
     FormFieldType["Invalid"] = "Invalid";
+    FormFieldType["Initial"] = "Initial";
 })(FormFieldType || (FormFieldType = {}));
 export var Valid = function (value) { return ({
     type: FormFieldType.Valid,
@@ -12,6 +13,10 @@ export var Invalid = function (value, errors) { return ({
     value: value,
     errors: errors
 }); };
+export var Initial = function (value) { return ({
+    type: FormFieldType.Initial,
+    value: value
+}); };
 export var FormField = {
     invalid: function (ff) {
         return ff.type === FormFieldType.Invalid;
@@ -19,12 +24,17 @@ export var FormField = {
     valid: function (ff) {
         return ff.type === FormFieldType.Valid;
     },
+    initial: function (ff) {
+        return ff.type === FormFieldType.Initial;
+    },
     match: function (ff, cases) {
         switch (ff.type) {
             case FormFieldType.Valid:
                 return cases.Valid(ff.value);
             case FormFieldType.Invalid:
                 return cases.Invalid(ff.value, ff.errors);
+            case FormFieldType.Initial:
+                return cases.Initial(ff.value);
         }
     }
 };
