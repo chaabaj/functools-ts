@@ -19,7 +19,7 @@ export var Validation = {
                             Initial: function (_) { return Invalid(result, errors); }
                         });
                     },
-                    Initial: function (_) { return current; }
+                    Initial: function (x) { return Valid(x); }
                 });
                 i++;
             }

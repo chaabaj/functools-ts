@@ -20,7 +20,7 @@ export const Validation = {
             Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2]),
             Initial: _ => Invalid(result, errors)
           }),
-        Initial: (_) => current
+        Initial: x => Valid(x)
       })
       i++
     }
