@@ -3,7 +3,7 @@ import { List } from "./list"
 export enum FormFieldType {
   Valid = "Valid",
   Invalid = "Invalid",
-  Initial = "Initial"
+  Untouched = "Untouched"
 }
 
 export interface Valid<A> {
@@ -27,11 +27,11 @@ export const Invalid = <E, A>(value: A, errors: List<E>): Invalid<E, A> => ({
 })
 
 export interface Initial<A> {
-  type: FormFieldType.Initial,
+  type: FormFieldType.Untouched,
   value: A
 }
-export const Initial = <A>(value: A): Initial<A> => ({
-  type: FormFieldType.Initial,
+export const Untouched = <A>(value: A): Initial<A> => ({
+  type: FormFieldType.Untouched,
   value
 }) 
 
@@ -40,7 +40,7 @@ export type FormField<E, A> = Valid<A> | Invalid<E, A> | Initial<A>
 interface FormFieldCases<E, A, B> {
   Valid(a: A): B
   Invalid(a: A, error: List<E>): B
-  Initial(a: A): B
+  Untouched(a: A): B
 }
 
 export const FormField = {
@@ -50,8 +50,8 @@ export const FormField = {
   valid: <E, A>(ff: FormField<E, A>): ff is Valid<A> =>
     ff.type === FormFieldType.Valid,
 
-  initial: <E, A>(ff: FormField<E, A>): ff is Initial<A> =>
-    ff.type === FormFieldType.Initial,
+  untouched: <E, A>(ff: FormField<E, A>): ff is Initial<A> =>
+    ff.type === FormFieldType.Untouched,
 
   match: <E, A, B>(ff: FormField<E, A>, cases: FormFieldCases<E, A, B>): B => {
     switch (ff.type) {
@@ -59,11 +59,11 @@ export const FormField = {
         return cases.Valid(ff.value)
       case FormFieldType.Invalid:
         return cases.Invalid(ff.value, ff.errors)
-      case FormFieldType.Initial:
-        return cases.Initial(ff.value)
+      case FormFieldType.Untouched:
+        return cases.Untouched(ff.value)
     }
   },
 
   isValidForm: (...fields: FormField<any, any>[]): boolean =>
-    fields.every(field => FormField.valid(field) || FormField.initial(field))
+    fields.every(field => FormField.valid(field) || FormField.untouched(field))
 }

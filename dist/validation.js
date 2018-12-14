@@ -1,4 +1,4 @@
-import { FormField, Valid, Invalid, Initial } from "./form";
+import { FormField, Valid, Invalid, Untouched } from "./form";
 export var Validation = {
     combine: function () {
         var validations = [];
@@ -16,10 +16,10 @@ export var Validation = {
                         return FormField.match(current, {
                             Valid: function (_) { return Invalid(result, errors); },
                             Invalid: function (_, errors2) { return Invalid(result, errors.concat(errors2)); },
-                            Initial: function (_) { return Invalid(result, errors); }
+                            Untouched: function (_) { return Invalid(result, errors); }
                         });
                     },
-                    Initial: function (x) { return Initial(x); }
+                    Untouched: function (x) { return Untouched(x); }
                 });
                 i++;
             }

@@ -2,7 +2,7 @@ export var FormFieldType;
 (function (FormFieldType) {
     FormFieldType["Valid"] = "Valid";
     FormFieldType["Invalid"] = "Invalid";
-    FormFieldType["Initial"] = "Initial";
+    FormFieldType["Untouched"] = "Untouched";
 })(FormFieldType || (FormFieldType = {}));
 export var Valid = function (value) { return ({
     type: FormFieldType.Valid,
@@ -13,8 +13,8 @@ export var Invalid = function (value, errors) { return ({
     value: value,
     errors: errors
 }); };
-export var Initial = function (value) { return ({
-    type: FormFieldType.Initial,
+export var Untouched = function (value) { return ({
+    type: FormFieldType.Untouched,
     value: value
 }); };
 export var FormField = {
@@ -24,8 +24,8 @@ export var FormField = {
     valid: function (ff) {
         return ff.type === FormFieldType.Valid;
     },
-    initial: function (ff) {
-        return ff.type === FormFieldType.Initial;
+    untouched: function (ff) {
+        return ff.type === FormFieldType.Untouched;
     },
     match: function (ff, cases) {
         switch (ff.type) {
@@ -33,8 +33,8 @@ export var FormField = {
                 return cases.Valid(ff.value);
             case FormFieldType.Invalid:
                 return cases.Invalid(ff.value, ff.errors);
-            case FormFieldType.Initial:
-                return cases.Initial(ff.value);
+            case FormFieldType.Untouched:
+                return cases.Untouched(ff.value);
         }
     },
     isValidForm: function () {
@@ -42,7 +42,7 @@ export var FormField = {
         for (var _i = 0; _i < arguments.length; _i++) {
             fields[_i] = arguments[_i];
         }
-        return fields.every(function (field) { return FormField.valid(field) || FormField.initial(field); });
+        return fields.every(function (field) { return FormField.valid(field) || FormField.untouched(field); });
     }
 };
 //# sourceMappingURL=form.js.map

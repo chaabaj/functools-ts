@@ -1,5 +1,5 @@
 import { F1 } from "./function"
-import { FormField, Valid, Invalid, Initial } from "./form"
+import { FormField, Valid, Invalid, Untouched } from "./form"
 
 export type Validation<E, A> = F1<A, FormField<E, A>>
 
@@ -18,9 +18,9 @@ export const Validation = {
           FormField.match(current, {
             Valid: _ => Invalid(result, errors),
             Invalid: (_, errors2) => Invalid(result, [...errors, ...errors2]),
-            Initial: _ => Invalid(result, errors)
+            Untouched: _ => Invalid(result, errors)
           }),
-        Initial: x => Initial(x)
+        Untouched: x => Untouched(x)
       })
       i++
     }
