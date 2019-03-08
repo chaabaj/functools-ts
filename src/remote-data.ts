@@ -1,4 +1,4 @@
-import { F1, F2 } from "./function"
+import { F1, F2, Lazy } from "./function"
 import { Option } from "./option"
 
 export enum RemoteDataStatus {
@@ -107,5 +107,8 @@ export const RemoteData = {
       Pending: () => "Pending",
       Failed: error => `Failed(${error.toString()})`,
       Unloaded: () => "Unloaded"
-    })
+    }),
+  
+  getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>): A =>
+    Option.getOrElse(RemoteData.data(rd1), fval)
 }

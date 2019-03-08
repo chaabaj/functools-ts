@@ -33,4 +33,12 @@ describe("remote data", () => {
   it("test if the first failed", () => {
     expect(RemoteData.map2(Failed("test"), Loaded(42), (a, b) => [a, b])).eql(Failed("test"))
   })
+
+  it("getOrElse when failed", () => {
+    expect(RemoteData.getOrElse(Failed("test"), () => 42)).eql(42)
+  })
+
+  it("getOrElse when loaded", () => {
+    expect(RemoteData.getOrElse(Loaded(42), () => 43)).eql(42)
+  })
 })

@@ -1,4 +1,4 @@
-import { F1, F2 } from "./function";
+import { F1, F2, Lazy } from "./function";
 import { Option } from "./option";
 export declare enum RemoteDataStatus {
     Loaded = "Loaded",
@@ -42,5 +42,6 @@ export declare const RemoteData: {
     map2: <E, A, B, C>(rd1: RemoteData<E, A>, rd2: RemoteData<E, B>, f: F2<A, B, C>) => RemoteData<E, C>;
     data: <E, A>(rd: RemoteData<E, A>) => Option<A>;
     toString: <E, A>(rd: RemoteData<E, A>) => string;
+    getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>) => A;
 };
 export {};

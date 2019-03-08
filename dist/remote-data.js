@@ -1,3 +1,4 @@
+import { Option } from "./option";
 export var RemoteDataStatus;
 (function (RemoteDataStatus) {
     RemoteDataStatus["Loaded"] = "Loaded";
@@ -73,6 +74,9 @@ export var RemoteData = {
             Failed: function (error) { return "Failed(" + error.toString() + ")"; },
             Unloaded: function () { return "Unloaded"; }
         });
+    },
+    getOrElse: function (rd1, fval) {
+        return Option.getOrElse(RemoteData.data(rd1), fval);
     }
 };
 //# sourceMappingURL=remote-data.js.map
