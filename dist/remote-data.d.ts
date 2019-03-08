@@ -11,30 +11,32 @@ export interface Loaded<A> {
     data: A;
 }
 export declare const Loaded: <A>(data: A) => Loaded<A>;
-export interface Pending {
+export interface Pending<A> {
     type: RemoteDataStatus.Pending;
+    data: Option<A>;
 }
-export declare const Pending: <A, E>() => RemoteData<E, A>;
-export interface Failed<E> {
+export declare const Pending: <E, A>(data?: Option<A>) => RemoteData<E, A>;
+export interface Failed<E, A> {
     type: RemoteDataStatus.Failed;
     error: E;
+    data?: Option<A>;
 }
-export declare const Failed: <E, A>(error: E) => RemoteData<E, A>;
+export declare const Failed: <E, A>(error: E, data?: Option<A>) => RemoteData<E, A>;
 export interface Unloaded {
     type: RemoteDataStatus.Unloaded;
 }
 export declare const Unloaded: <E, A>() => RemoteData<E, A>;
-export declare type RemoteData<E, A> = Unloaded | Pending | Failed<E> | Loaded<A>;
+export declare type RemoteData<E, A> = Unloaded | Pending<A> | Failed<E, A> | Loaded<A>;
 interface RemoteDataCases<E, A, B> {
     Loaded: (a: A) => B;
-    Pending: () => B;
-    Failed: (error: E) => B;
+    Pending: (data: Option<A>) => B;
+    Failed: (error: E, data: Option<A>) => B;
     Unloaded: () => B;
 }
 export declare const RemoteData: {
     loaded: <E, A>(rd: RemoteData<E, A>) => rd is Loaded<A>;
-    pending: <E, A>(rd: RemoteData<E, A>) => rd is Pending;
-    failed: <E, A>(rd: RemoteData<E, A>) => rd is Failed<E>;
+    pending: <E, A>(rd: RemoteData<E, A>) => rd is Pending<A>;
+    failed: <E, A>(rd: RemoteData<E, A>) => rd is Failed<E, A>;
     unloaded: <E, A>(rd: RemoteData<E, A>) => rd is Unloaded;
     match: <E, A, B>(rd: RemoteData<E, A>, cases: RemoteDataCases<E, A, B>) => B;
     map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>) => RemoteData<E, B>;
@@ -43,5 +45,7 @@ export declare const RemoteData: {
     data: <E, A>(rd: RemoteData<E, A>) => Option<A>;
     toString: <E, A>(rd: RemoteData<E, A>) => string;
     getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>) => A;
+    merge: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>, add: F2<A, A, A>) => RemoteData<E, A>;
+    replace: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>) => RemoteData<E, A>;
 };
 export {};

@@ -17,20 +17,24 @@ export const Loaded = <A>(data: A): Loaded<A> => ({
   data
 })
 
-export interface Pending {
-  type: RemoteDataStatus.Pending
+export interface Pending<A> {
+  type: RemoteDataStatus.Pending,
+  data: Option<A>
 }
-export const Pending = <A, E>(): RemoteData<E, A> => ({
-  type: RemoteDataStatus.Pending
+export const Pending = <E, A>(data?: Option<A>): RemoteData<E, A> => ({
+  type: RemoteDataStatus.Pending,
+  data
 })
 
-export interface Failed<E> {
+export interface Failed<E, A> {
   type: RemoteDataStatus.Failed
-  error: E
+  error: E,
+  data?: Option<A>
 }
-export const Failed = <E, A>(error: E): RemoteData<E, A> => ({
+export const Failed = <E, A>(error: E, data?: Option<A>): RemoteData<E, A> => ({
   type: RemoteDataStatus.Failed,
-  error
+  error,
+  data
 })
 
 export interface Unloaded {
@@ -40,12 +44,12 @@ export const Unloaded = <E, A>(): RemoteData<E, A> => ({
   type: RemoteDataStatus.Unloaded
 })
 
-export type RemoteData<E, A> = Unloaded | Pending | Failed<E> | Loaded<A>
+export type RemoteData<E, A> = Unloaded | Pending<A> | Failed<E, A> | Loaded<A>
 
 interface RemoteDataCases<E, A, B> {
   Loaded: (a: A) => B
-  Pending: () => B
-  Failed: (error: E) => B
+  Pending: (data: Option<A>) => B
+  Failed: (error: E, data: Option<A>) => B
   Unloaded: () => B
 }
 
@@ -53,10 +57,10 @@ export const RemoteData = {
   loaded: <E, A>(rd: RemoteData<E, A>): rd is Loaded<A> =>
     rd.type === RemoteDataStatus.Loaded,
 
-  pending: <E, A>(rd: RemoteData<E, A>): rd is Pending =>
+  pending: <E, A>(rd: RemoteData<E, A>): rd is Pending<A> =>
     rd.type === RemoteDataStatus.Pending,
 
-  failed: <E, A>(rd: RemoteData<E, A>): rd is Failed<E> =>
+  failed: <E, A>(rd: RemoteData<E, A>): rd is Failed<E, A> =>
     rd.type === RemoteDataStatus.Failed,
 
   unloaded: <E, A>(rd: RemoteData<E, A>): rd is Unloaded =>
@@ -70,9 +74,9 @@ export const RemoteData = {
       case RemoteDataStatus.Loaded:
         return cases.Loaded(rd.data)
       case RemoteDataStatus.Pending:
-        return cases.Pending()
+        return cases.Pending(rd.data)
       case RemoteDataStatus.Failed:
-        return cases.Failed(rd.error)
+        return cases.Failed(rd.error, rd.data)
       case RemoteDataStatus.Unloaded:
         return cases.Unloaded()
     }
@@ -99,16 +103,36 @@ export const RemoteData = {
 
 
   data: <E, A>(rd: RemoteData<E, A>): Option<A> =>
-    RemoteData.loaded(rd) ? rd.data : null,
+    RemoteData.loaded(rd) || RemoteData.failed(rd) || RemoteData.pending(rd) ? rd.data : null,
 
   toString: <E, A>(rd: RemoteData<E, A>): string =>
     RemoteData.match(rd, {
-      Loaded: x => `Loaded(${x})`,
-      Pending: () => "Pending",
-      Failed: error => `Failed(${error.toString()})`,
+      Loaded: data => `Loaded(${data})`,
+      Pending: data => `Pending(${data})`,
+      Failed: (error, data) => `Failed(${error.toString()}, ${data})`,
       Unloaded: () => "Unloaded"
     }),
   
   getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>): A =>
-    Option.getOrElse(RemoteData.data(rd1), fval)
+    Option.getOrElse(RemoteData.data(rd1), fval),
+
+  merge: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>, add: F2<A, A, A>): RemoteData<E, A> => {
+    if (RemoteData.loaded(rd1) && RemoteData.loaded(rd2))
+      return Loaded(add(rd1.data, rd2.data))
+    else if (RemoteData.pending(rd1) && RemoteData.loaded(rd2))
+      return rd1.data ? Loaded(add(rd1.data, rd2.data)) : rd2
+    else if (RemoteData.pending(rd1) && RemoteData.pending(rd2))
+      return rd1.data && rd2.data ? Pending(add(rd1.data, rd2.data)) : rd2
+    else if (RemoteData.pending(rd1) && RemoteData.failed(rd2))
+      return rd1.data ? Failed(rd2.error, rd1.data) : rd2
+    else if (RemoteData.failed(rd1) && RemoteData.failed(rd2))
+      return rd1.data ? Failed(rd2.error, rd1.data): rd2
+    else if (RemoteData.failed(rd1) && RemoteData.pending(rd2))
+      return rd1.data ? Pending(rd1.data) : rd2
+    else
+      return rd2
+  },
+
+  replace: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>): RemoteData<E, A> =>
+    RemoteData.merge(rd1, rd2, a => a)
 }
