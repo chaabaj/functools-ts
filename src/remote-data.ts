@@ -45,6 +45,7 @@ export const Unloaded = <E, A>(): RemoteData<E, A> => ({
 })
 
 export type RemoteData<E, A> = Unloaded | Pending<A> | Failed<E, A> | Loaded<A>
+export type State<E, A> = [Option<E>, Option<A>, boolean]
 
 interface RemoteDataCases<E, A, B> {
   Loaded: (a: A) => B
@@ -85,16 +86,16 @@ export const RemoteData = {
   map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>): RemoteData<E, B> =>
     RemoteData.match<E, A, RemoteData<E, B>>(rd, {
       Loaded: x => Loaded(f(x)),
-      Pending: () => Pending(),
-      Failed: e => Failed(e),
+      Pending: data => data ? Pending(f(data)): Pending(),
+      Failed: (e, data) => data ? Failed(e, f(data)) : Failed(e),
       Unloaded: () => Unloaded()
     }),
 
   flatMap: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, RemoteData<E, B>>): RemoteData<E, B> =>
     RemoteData.match<E, A, RemoteData<E, B>>(rd, {
       Loaded: x => f(x),
-      Pending: () => Pending(),
-      Failed: e => Failed(e),
+      Pending: data => data ? f(data) : Pending(),
+      Failed: (e, data) => data ? f(data) : Failed(e),
       Unloaded: () => Unloaded()
     }),
 
@@ -134,5 +135,16 @@ export const RemoteData = {
   },
 
   replace: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>): RemoteData<E, A> =>
-    RemoteData.merge(rd1, rd2, a => a)
+    RemoteData.merge(rd1, rd2, a => a),
+
+  getState: <E, A>(rd1: RemoteData<E, A>): State<E, A> => {
+    const b = RemoteData.match(rd1, {
+      Loaded: data => [null, data, false],
+      Pending: (data) => [null, data || null, true],
+      Failed: (err, data) => [err, data || null, false],
+      Unloaded: () => [null, null, false]
+    }) as State<E, A>
+    return b
+  }
+    
 }

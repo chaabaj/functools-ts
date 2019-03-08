@@ -50,16 +50,16 @@ export var RemoteData = {
     map: function (rd, f) {
         return RemoteData.match(rd, {
             Loaded: function (x) { return Loaded(f(x)); },
-            Pending: function () { return Pending(); },
-            Failed: function (e) { return Failed(e); },
+            Pending: function (data) { return data ? Pending(f(data)) : Pending(); },
+            Failed: function (e, data) { return data ? Failed(e, f(data)) : Failed(e); },
             Unloaded: function () { return Unloaded(); }
         });
     },
     flatMap: function (rd, f) {
         return RemoteData.match(rd, {
             Loaded: function (x) { return f(x); },
-            Pending: function () { return Pending(); },
-            Failed: function (e) { return Failed(e); },
+            Pending: function (data) { return data ? f(data) : Pending(); },
+            Failed: function (e, data) { return data ? f(data) : Failed(e); },
             Unloaded: function () { return Unloaded(); }
         });
     },
@@ -98,6 +98,15 @@ export var RemoteData = {
     },
     replace: function (rd1, rd2) {
         return RemoteData.merge(rd1, rd2, function (a) { return a; });
+    },
+    getState: function (rd1) {
+        var b = RemoteData.match(rd1, {
+            Loaded: function (data) { return [null, data, false]; },
+            Pending: function (data) { return [null, data || null, true]; },
+            Failed: function (err, data) { return [err, data || null, false]; },
+            Unloaded: function () { return [null, null, false]; }
+        });
+        return b;
     }
 };
 //# sourceMappingURL=remote-data.js.map

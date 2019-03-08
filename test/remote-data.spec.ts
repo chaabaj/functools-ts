@@ -58,4 +58,20 @@ describe("remote data", () => {
     expect(RemoteData.merge(rd5, rd4, concat)).eql(Pending([1, 2]))
     expect(RemoteData.merge(rd6, rd1, concat)).eql(Loaded([1, 2]))
   })
+
+  it("getState", () => {
+    const rd1 = Loaded(1)
+    const rd2 = Pending(2)
+    const rd3 = Pending()
+    const rd4 = Unloaded()
+    const rd5 = Failed("test", 1)
+    const rd6 = Failed("test")
+
+    expect(RemoteData.getState(rd1)).eql([null, rd1.data, false])
+    expect(RemoteData.getState(rd2)).eql([null, 2, true])
+    expect(RemoteData.getState(rd3)).eql([null, null, true])
+    expect(RemoteData.getState(rd4)).eql([null, null, false])
+    expect(RemoteData.getState(rd5)).eql(["test", 1, false])
+    expect(RemoteData.getState(rd6)).eql(["test", null, false])
+  })
 })

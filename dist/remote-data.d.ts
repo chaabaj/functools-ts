@@ -27,6 +27,7 @@ export interface Unloaded {
 }
 export declare const Unloaded: <E, A>() => RemoteData<E, A>;
 export declare type RemoteData<E, A> = Unloaded | Pending<A> | Failed<E, A> | Loaded<A>;
+export declare type State<E, A> = [Option<E>, Option<A>, boolean];
 interface RemoteDataCases<E, A, B> {
     Loaded: (a: A) => B;
     Pending: (data: Option<A>) => B;
@@ -47,5 +48,6 @@ export declare const RemoteData: {
     getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>) => A;
     merge: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>, add: F2<A, A, A>) => RemoteData<E, A>;
     replace: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>) => RemoteData<E, A>;
+    getState: <E, A>(rd1: RemoteData<E, A>) => [Option<E>, Option<A>, boolean];
 };
 export {};
