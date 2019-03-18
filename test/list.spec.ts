@@ -30,4 +30,14 @@ describe("list", () => {
   it("should not remove if not found", () => {
     expect(List.remove(items, null)).to.eql(items)
   })
+
+  it("should be true if two list are equals", () => {
+    expect(List.equals(items, items)).to.eq(true)
+  })
+
+  it("should return false if two list are not equals", () => {
+    const list2 = List.set(items, {name: "test2"}, {name: "test2", description: "toto"})
+    expect(List.equals(items, items.slice(1))).to.eq(false)
+    expect(List.equals(items, list2)).to.eq(false)
+  })
 })

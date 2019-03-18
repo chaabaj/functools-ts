@@ -60,5 +60,22 @@ export const List = {
 
   isList: <A>(maybeList: any): maybeList is List<A> => Array.isArray(maybeList),
   remove: <A>(list: List<A>, itemToRemove: A): List<A> =>
-    list.filter(item => item !== itemToRemove)
+    list.filter(item => item !== itemToRemove),
+  equals: <A>(list1: List<A>, list2: List<A>, eq?: (a: A, b: A) => boolean): boolean => {
+    if (list1.length !== list2.length)
+      return false
+    else {
+      for (let i = 0; i < list1.length; ++i) {
+        const elem1 = list1[i]
+        const elem2 = list2[i]
+        if (Option.isDefined(eq) && !eq(elem1, elem2))
+          return false
+        else if (Option.isEmpty(eq) && elem1 !== elem2)
+          return false
+        else
+          continue
+      }
+      return true
+    }
+  }
 }

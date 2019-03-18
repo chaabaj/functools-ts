@@ -1,3 +1,4 @@
+import { Option } from "./option";
 var match = function (selector, item, index, list) {
     return typeof selector === "number"
         ? selector === index
@@ -38,6 +39,23 @@ export var List = {
     isList: function (maybeList) { return Array.isArray(maybeList); },
     remove: function (list, itemToRemove) {
         return list.filter(function (item) { return item !== itemToRemove; });
+    },
+    equals: function (list1, list2, eq) {
+        if (list1.length !== list2.length)
+            return false;
+        else {
+            for (var i = 0; i < list1.length; ++i) {
+                var elem1 = list1[i];
+                var elem2 = list2[i];
+                if (Option.isDefined(eq) && !eq(elem1, elem2))
+                    return false;
+                else if (Option.isEmpty(eq) && elem1 !== elem2)
+                    return false;
+                else
+                    continue;
+            }
+            return true;
+        }
     }
 };
 //# sourceMappingURL=list.js.map
