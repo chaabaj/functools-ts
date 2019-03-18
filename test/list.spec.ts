@@ -21,4 +21,13 @@ describe("list", () => {
     const firstItem = List.get(items, {name: "test"})
     expect(firstItem).to.eql(items[0])
   })
+
+  it("should remove an item", () => {
+    const firstItem = items[0]
+    expect(List.remove(items, firstItem)).to.eql(items.slice(1))
+  })
+
+  it("should not remove if not found", () => {
+    expect(List.remove(items, null)).to.eql(items)
+  })
 })

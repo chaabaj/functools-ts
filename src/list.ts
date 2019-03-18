@@ -58,5 +58,7 @@ export const List = {
         ? cases.Single(list[0])
         : cases.Cons(list[0], list.slice(1)),
 
-  isList: <A>(maybeList: any): maybeList is List<A> => Array.isArray(maybeList)
+  isList: <A>(maybeList: any): maybeList is List<A> => Array.isArray(maybeList),
+  remove: <A>(list: List<A>, itemToRemove: A): List<A> =>
+    list.filter(item => item !== itemToRemove)
 }

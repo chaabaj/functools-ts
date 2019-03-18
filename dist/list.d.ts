@@ -13,5 +13,6 @@ export declare const List: {
     contains: <A>(list: ReadonlyArray<A>, item: A) => boolean;
     match: <A, B>(list: ReadonlyArray<A>, cases: ListCases<A, B>) => B;
     isList: <A>(maybeList: any) => maybeList is ReadonlyArray<A>;
+    remove: <A>(list: ReadonlyArray<A>, itemToRemove: A) => ReadonlyArray<A>;
 };
 export {};
