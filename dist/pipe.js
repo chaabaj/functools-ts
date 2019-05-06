@@ -1,4 +1,6 @@
-export var pipe = function (a) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.pipe = function (a) {
     var fns = [];
     for (var _i = 1; _i < arguments.length; _i++) {
         fns[_i - 1] = arguments[_i];

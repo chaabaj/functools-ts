@@ -1,4 +1,6 @@
-import { Option } from "./option";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var option_1 = require("./option");
 var match = function (selector, item, index, list) {
     return typeof selector === "number"
         ? selector === index
@@ -17,7 +19,7 @@ var propsMatch = function (record, partial) {
 var getNewValue = function (newValue, oldValue) {
     return typeof newValue === "function" ? newValue(oldValue) : newValue;
 };
-export var List = {
+exports.List = {
     set: function (list, where, value) {
         return list.map(function (item, i) {
             return match(where, item, i, list) ? getNewValue(value, item) : item;
@@ -47,9 +49,9 @@ export var List = {
             for (var i = 0; i < list1.length; ++i) {
                 var elem1 = list1[i];
                 var elem2 = list2[i];
-                if (Option.isDefined(eq) && !eq(elem1, elem2))
+                if (option_1.Option.isDefined(eq) && !eq(elem1, elem2))
                     return false;
-                else if (Option.isEmpty(eq) && elem1 !== elem2)
+                else if (option_1.Option.isEmpty(eq) && elem1 !== elem2)
                     return false;
                 else
                     continue;

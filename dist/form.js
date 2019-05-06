@@ -1,23 +1,25 @@
-export var FormFieldType;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var FormFieldType;
 (function (FormFieldType) {
     FormFieldType["Valid"] = "Valid";
     FormFieldType["Invalid"] = "Invalid";
     FormFieldType["Untouched"] = "Untouched";
-})(FormFieldType || (FormFieldType = {}));
-export var Valid = function (value) { return ({
+})(FormFieldType = exports.FormFieldType || (exports.FormFieldType = {}));
+exports.Valid = function (value) { return ({
     type: FormFieldType.Valid,
     value: value
 }); };
-export var Invalid = function (value, errors) { return ({
+exports.Invalid = function (value, errors) { return ({
     type: FormFieldType.Invalid,
     value: value,
     errors: errors
 }); };
-export var Untouched = function (value) { return ({
+exports.Untouched = function (value) { return ({
     type: FormFieldType.Untouched,
     value: value
 }); };
-export var FormField = {
+exports.FormField = {
     invalid: function (ff) {
         return ff.type === FormFieldType.Invalid;
     },
@@ -42,7 +44,7 @@ export var FormField = {
         for (var _i = 0; _i < arguments.length; _i++) {
             fields[_i] = arguments[_i];
         }
-        return fields.every(function (field) { return FormField.valid(field) || FormField.untouched(field); });
+        return fields.every(function (field) { return exports.FormField.valid(field) || exports.FormField.untouched(field); });
     }
 };
 //# sourceMappingURL=form.js.map

@@ -1,4 +1,6 @@
-export var Filter = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Filter = {
     combine: function () {
         var filters = [];
         for (var _i = 0; _i < arguments.length; _i++) {

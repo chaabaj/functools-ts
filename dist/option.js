@@ -1,19 +1,21 @@
-export var Option = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Option = {
     map: function (value, f) {
-        return Option.flatMap(value, f);
+        return exports.Option.flatMap(value, f);
     },
     flatMap: function (value, f) {
-        return Option.isDefined(value) ? f(value) : null;
+        return exports.Option.isDefined(value) ? f(value) : null;
     },
     getOrElse: function (value, defaultVal) {
-        return Option.isDefined(value) ? value : defaultVal();
+        return exports.Option.isDefined(value) ? value : defaultVal();
     },
     isDefined: function (value) { return value != null; },
     isEmpty: function (value) {
-        return !Option.isDefined(value);
+        return !exports.Option.isDefined(value);
     },
     forEach: function (value, f) {
-        return Option.isDefined(value) ? f(value) : null;
+        return exports.Option.isDefined(value) ? f(value) : null;
     },
     sequence: function (list) {
         var i = 0;
@@ -21,7 +23,7 @@ export var Option = {
         var res = [];
         while (i < length) {
             var current = list[i];
-            if (Option.isEmpty(current))
+            if (exports.Option.isEmpty(current))
                 return null;
             res.push(current);
             i++;

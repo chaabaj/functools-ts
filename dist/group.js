@@ -1,3 +1,4 @@
+"use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -6,6 +7,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var group_ = function () {
     var fns = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -18,5 +20,5 @@ var group_ = function () {
     };
 };
 var group = group_;
-export { group };
+exports.group = group;
 //# sourceMappingURL=group.js.map

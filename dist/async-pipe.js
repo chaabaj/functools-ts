@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var defer = function (f) { return setTimeout(f, 0); };
 var asyncGroup_ = function () {
     var tasks = [];
@@ -9,8 +11,8 @@ var asyncGroup_ = function () {
     };
 };
 var asyncGroup = asyncGroup_;
-export { asyncGroup };
-export var asyncPipe = function () {
+exports.asyncGroup = asyncGroup;
+exports.asyncPipe = function () {
     var tasks = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         tasks[_i] = arguments[_i];

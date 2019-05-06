@@ -1,28 +1,30 @@
-import { Option } from "./option";
-export var RemoteDataStatus;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var option_1 = require("./option");
+var RemoteDataStatus;
 (function (RemoteDataStatus) {
     RemoteDataStatus["Loaded"] = "Loaded";
     RemoteDataStatus["Pending"] = "Pending";
     RemoteDataStatus["Failed"] = "Failed";
     RemoteDataStatus["Unloaded"] = "Unloaded";
-})(RemoteDataStatus || (RemoteDataStatus = {}));
-export var Loaded = function (data) { return ({
+})(RemoteDataStatus = exports.RemoteDataStatus || (exports.RemoteDataStatus = {}));
+exports.Loaded = function (data) { return ({
     type: RemoteDataStatus.Loaded,
     data: data
 }); };
-export var Pending = function (data) { return ({
+exports.Pending = function (data) { return ({
     type: RemoteDataStatus.Pending,
     data: data
 }); };
-export var Failed = function (error, data) { return ({
+exports.Failed = function (error, data) { return ({
     type: RemoteDataStatus.Failed,
     error: error,
     data: data
 }); };
-export var Unloaded = function () { return ({
+exports.Unloaded = function () { return ({
     type: RemoteDataStatus.Unloaded
 }); };
-export var RemoteData = {
+exports.RemoteData = {
     loaded: function (rd) {
         return rd.type === RemoteDataStatus.Loaded;
     },
@@ -48,29 +50,29 @@ export var RemoteData = {
         }
     },
     map: function (rd, f) {
-        return RemoteData.match(rd, {
-            Loaded: function (x) { return Loaded(f(x)); },
-            Pending: function (data) { return data ? Pending(f(data)) : Pending(); },
-            Failed: function (e, data) { return data ? Failed(e, f(data)) : Failed(e); },
-            Unloaded: function () { return Unloaded(); }
+        return exports.RemoteData.match(rd, {
+            Loaded: function (x) { return exports.Loaded(f(x)); },
+            Pending: function (data) { return data ? exports.Pending(f(data)) : exports.Pending(); },
+            Failed: function (e, data) { return data ? exports.Failed(e, f(data)) : exports.Failed(e); },
+            Unloaded: function () { return exports.Unloaded(); }
         });
     },
     flatMap: function (rd, f) {
-        return RemoteData.match(rd, {
+        return exports.RemoteData.match(rd, {
             Loaded: function (x) { return f(x); },
-            Pending: function (data) { return data ? f(data) : Pending(); },
-            Failed: function (e, data) { return data ? f(data) : Failed(e); },
-            Unloaded: function () { return Unloaded(); }
+            Pending: function (data) { return data ? f(data) : exports.Pending(); },
+            Failed: function (e, data) { return data ? f(data) : exports.Failed(e); },
+            Unloaded: function () { return exports.Unloaded(); }
         });
     },
     map2: function (rd1, rd2, f) {
-        return RemoteData.flatMap(rd1, function (data1) { return RemoteData.map(rd2, function (data2) { return f(data1, data2); }); });
+        return exports.RemoteData.flatMap(rd1, function (data1) { return exports.RemoteData.map(rd2, function (data2) { return f(data1, data2); }); });
     },
     data: function (rd) {
-        return RemoteData.loaded(rd) || RemoteData.failed(rd) || RemoteData.pending(rd) ? rd.data : null;
+        return exports.RemoteData.loaded(rd) || exports.RemoteData.failed(rd) || exports.RemoteData.pending(rd) ? rd.data : null;
     },
     toString: function (rd) {
-        return RemoteData.match(rd, {
+        return exports.RemoteData.match(rd, {
             Loaded: function (data) { return "Loaded(" + data + ")"; },
             Pending: function (data) { return "Pending(" + data + ")"; },
             Failed: function (error, data) { return "Failed(" + error.toString() + ", " + data + ")"; },
@@ -78,29 +80,29 @@ export var RemoteData = {
         });
     },
     getOrElse: function (rd1, fval) {
-        return Option.getOrElse(RemoteData.data(rd1), fval);
+        return option_1.Option.getOrElse(exports.RemoteData.data(rd1), fval);
     },
     merge: function (rd1, rd2, add) {
-        if (RemoteData.loaded(rd1) && RemoteData.loaded(rd2))
-            return Loaded(add(rd1.data, rd2.data));
-        else if (RemoteData.pending(rd1) && RemoteData.loaded(rd2))
-            return rd1.data ? Loaded(add(rd1.data, rd2.data)) : rd2;
-        else if (RemoteData.pending(rd1) && RemoteData.pending(rd2))
-            return rd1.data && rd2.data ? Pending(add(rd1.data, rd2.data)) : rd2;
-        else if (RemoteData.pending(rd1) && RemoteData.failed(rd2))
-            return rd1.data ? Failed(rd2.error, rd1.data) : rd2;
-        else if (RemoteData.failed(rd1) && RemoteData.failed(rd2))
-            return rd1.data ? Failed(rd2.error, rd1.data) : rd2;
-        else if (RemoteData.failed(rd1) && RemoteData.pending(rd2))
-            return rd1.data ? Pending(rd1.data) : rd2;
+        if (exports.RemoteData.loaded(rd1) && exports.RemoteData.loaded(rd2))
+            return exports.Loaded(add(rd1.data, rd2.data));
+        else if (exports.RemoteData.pending(rd1) && exports.RemoteData.loaded(rd2))
+            return rd1.data ? exports.Loaded(add(rd1.data, rd2.data)) : rd2;
+        else if (exports.RemoteData.pending(rd1) && exports.RemoteData.pending(rd2))
+            return rd1.data && rd2.data ? exports.Pending(add(rd1.data, rd2.data)) : rd2;
+        else if (exports.RemoteData.pending(rd1) && exports.RemoteData.failed(rd2))
+            return rd1.data ? exports.Failed(rd2.error, rd1.data) : rd2;
+        else if (exports.RemoteData.failed(rd1) && exports.RemoteData.failed(rd2))
+            return rd1.data ? exports.Failed(rd2.error, rd1.data) : rd2;
+        else if (exports.RemoteData.failed(rd1) && exports.RemoteData.pending(rd2))
+            return rd1.data ? exports.Pending(rd1.data) : rd2;
         else
             return rd2;
     },
     replace: function (rd1, rd2) {
-        return RemoteData.merge(rd1, rd2, function (a) { return a; });
+        return exports.RemoteData.merge(rd1, rd2, function (a) { return a; });
     },
     getState: function (rd1) {
-        var b = RemoteData.match(rd1, {
+        var b = exports.RemoteData.match(rd1, {
             Loaded: function (data) { return [null, data, false]; },
             Pending: function (data) { return [null, data || null, true]; },
             Failed: function (err, data) { return [err, data || null, false]; },

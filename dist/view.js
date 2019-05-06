@@ -1,4 +1,6 @@
-export var ListView = function (start, end, items) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ListView = function (start, end, items) {
     var self = {
         at: function (index) { return items[start + index]; },
         forEach: function (f) {
@@ -16,7 +18,7 @@ export var ListView = function (start, end, items) {
         length: end - start,
         slice: function (newStart, newEnd) {
             if (newStart <= end && newStart >= 0 && newEnd <= end && newEnd >= start)
-                return ListView(start + newStart, start + newEnd, items);
+                return exports.ListView(start + newStart, start + newEnd, items);
             else
                 throw new Error("new start and new end must ");
         },
