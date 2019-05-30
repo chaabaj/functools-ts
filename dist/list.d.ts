@@ -15,6 +15,6 @@ export declare const List: {
     isList: <A>(maybeList: any) => maybeList is ReadonlyArray<A>;
     remove: <A>(list: ReadonlyArray<A>, itemToRemove: A) => ReadonlyArray<A>;
     equals: <A>(list1: ReadonlyArray<A>, list2: ReadonlyArray<A>, eq?: ((a: A, b: A) => boolean) | undefined) => boolean;
-    place: <A>(a: A, where: Selector<A>, newIdx: number) => (list: ReadonlyArray<A>) => ReadonlyArray<A>;
+    setAndMove: <A>(a: A, where: Selector<A>, newIdx: number) => (list: ReadonlyArray<A>) => ReadonlyArray<A>;
 };
 export {};

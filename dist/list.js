@@ -59,7 +59,7 @@ exports.List = {
             return true;
         }
     },
-    place: function (a, where, newIdx) { return function (list) {
+    setAndMove: function (a, where, newIdx) { return function (list) {
         var list_ = list.filter(function (item, idx) { return !match(where, item, idx, list); });
         list_.splice(newIdx, 0, a);
         return list_;

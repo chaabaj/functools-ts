@@ -42,12 +42,12 @@ describe("list", () => {
   })
 
   it("should move item from index 2 to index 1", () => {
-    const moved = List.place(items[1], 1, 2)(items)
+    const moved = List.setAndMove(items[1], 1, 2)(items)
     expect(moved[2]).to.eql(items[1])
   })
 
   it("should move the first element to the end", () => {
-    const moved = List.place(items[0], 0, 2)(items)
+    const moved = List.setAndMove(items[0], 0, 2)(items)
     expect(moved[2]).to.eql(items[0])
   })
 })

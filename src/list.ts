@@ -78,7 +78,7 @@ export const List = {
       return true
     }
   },
-  place: <A>(a: A, where: Selector<A>, newIdx: number) => (list: List<A>): List<A> => {
+  setAndMove: <A>(a: A, where: Selector<A>, newIdx: number) => (list: List<A>): List<A> => {
     const list_ = list.filter(
       (item, idx) => !match(where, item, idx, list)
     )
