@@ -9,7 +9,7 @@ describe("list", () => {
     },
     {
       name: "test3",
-      description: "test2"
+      description: "test3"
     },
     {
       name: "test2",
@@ -39,5 +39,15 @@ describe("list", () => {
     const list2 = List.set(items, {name: "test2"}, {name: "test2", description: "toto"})
     expect(List.equals(items, items.slice(1))).to.eq(false)
     expect(List.equals(items, list2)).to.eq(false)
+  })
+
+  it("should move item from index 2 to index 1", () => {
+    const moved = List.place(items[1], 1, 2)(items)
+    expect(moved[2]).to.eql(items[1])
+  })
+
+  it("should move the first element to the end", () => {
+    const moved = List.place(items[0], 0, 2)(items)
+    expect(moved[2]).to.eql(items[0])
   })
 })
