@@ -106,7 +106,7 @@ export const RemoteData = {
   data: <E, A>(rd: RemoteData<E, A>): Option<A> =>
     RemoteData.loaded(rd) || RemoteData.failed(rd) || RemoteData.pending(rd) ? rd.data : null,
 
-  toString: <E, A>(rd: RemoteData<E, A>): string =>
+  toString: <E extends {}, A>(rd: RemoteData<E, A>): string =>
     RemoteData.match(rd, {
       Loaded: data => `Loaded(${data})`,
       Pending: data => `Pending(${data})`,
@@ -139,7 +139,7 @@ export const RemoteData = {
 
   getState: <E, A>(rd1: RemoteData<E, A>): State<E, A> => {
     const b = RemoteData.match(rd1, {
-      Loaded: data => [null, data, false],
+      Loaded: data => [null, data, false] as State<E, A>,
       Pending: (data) => [null, data || null, true],
       Failed: (err, data) => [err, data || null, false],
       Unloaded: () => [null, null, false]
