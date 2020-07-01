@@ -1,5 +1,13 @@
 "use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Validation = void 0;
 var form_1 = require("./form");
 exports.Validation = {
     combine: function () {
@@ -17,7 +25,7 @@ exports.Validation = {
                     Invalid: function (result, errors) {
                         return form_1.FormField.match(current, {
                             Valid: function (_) { return form_1.Invalid(result, errors); },
-                            Invalid: function (_, errors2) { return form_1.Invalid(result, errors.concat(errors2)); },
+                            Invalid: function (_, errors2) { return form_1.Invalid(result, __spreadArrays(errors, errors2)); },
                             Untouched: function (_) { return form_1.Invalid(result, errors); }
                         });
                     },

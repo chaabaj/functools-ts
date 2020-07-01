@@ -1,3 +1,4 @@
+import { List } from "./list";
 import { F2, F3 } from "./function";
 export interface View<A> {
     at(index: number): A;
@@ -12,5 +13,5 @@ interface ViewCases<A, B> {
     Single(a: A): B;
     Cons(a: A, rest: View<A>): B;
 }
-export declare const ListView: <A>(start: number, end: number, items: ReadonlyArray<A>) => View<A>;
+export declare const ListView: <A>(start: number, end: number, items: List<A>) => View<A>;
 export {};

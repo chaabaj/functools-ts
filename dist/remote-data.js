@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RemoteData = exports.Unloaded = exports.Failed = exports.Pending = exports.Loaded = exports.RemoteDataStatus = void 0;
 var option_1 = require("./option");
 var RemoteDataStatus;
 (function (RemoteDataStatus) {

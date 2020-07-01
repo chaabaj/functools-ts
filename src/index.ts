@@ -12,7 +12,7 @@ import { FormField, Valid, Invalid, Untouched } from "./form"
 import { Success, Failure } from "./result"
 import { asyncPipe, asyncGroup } from "./async-pipe"
 import { group } from "./group";
-import { F1, F2, F3, F4, F5, F6, Lazy, Curried, Curried2 } from "./function";
+import { F1, F2, F3, F4, F5, F6, Lazy, Curried, Curried2, F7, F8, F9, F10 } from "./function";
 
 export {
   compose,
@@ -48,6 +48,10 @@ export {
   F4,
   F5,
   F6,
+  F7,
+  F8,
+  F9,
+  F10,
   Lazy,
   Curried,
   Curried2

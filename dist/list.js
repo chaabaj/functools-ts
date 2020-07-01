@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.List = void 0;
 var option_1 = require("./option");
 var match = function (selector, item, index, list) {
     return typeof selector === "number"

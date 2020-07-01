@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ListView = void 0;
 exports.ListView = function (start, end, items) {
     var self = {
         at: function (index) { return items[start + index]; },

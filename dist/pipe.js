@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.pipe = void 0;
 exports.pipe = function (a) {
     var fns = [];
     for (var _i = 1; _i < arguments.length; _i++) {

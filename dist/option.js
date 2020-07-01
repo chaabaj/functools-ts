@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Option = void 0;
 exports.Option = {
     map: function (value, f) {
         return exports.Option.flatMap(value, f);

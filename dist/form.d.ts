@@ -14,7 +14,7 @@ export interface Invalid<E, A> {
     value: A;
     errors: List<E>;
 }
-export declare const Invalid: <E, A>(value: A, errors: ReadonlyArray<E>) => Invalid<E, A>;
+export declare const Invalid: <E, A>(value: A, errors: List<E>) => Invalid<E, A>;
 export interface Initial<A> {
     type: FormFieldType.Untouched;
     value: A;
@@ -28,9 +28,9 @@ interface FormFieldCases<E, A, B> {
 }
 export declare const FormField: {
     invalid: <E, A>(ff: FormField<E, A>) => ff is Invalid<E, A>;
-    valid: <E, A>(ff: FormField<E, A>) => ff is Valid<A>;
-    untouched: <E, A>(ff: FormField<E, A>) => ff is Initial<A>;
-    match: <E, A, B>(ff: FormField<E, A>, cases: FormFieldCases<E, A, B>) => B;
+    valid: <E_1, A_1>(ff: FormField<E_1, A_1>) => ff is Valid<A_1>;
+    untouched: <E_2, A_2>(ff: FormField<E_2, A_2>) => ff is Initial<A_2>;
+    match: <E_3, A_3, B>(ff: FormField<E_3, A_3>, cases: FormFieldCases<E_3, A_3, B>) => B;
     isValidForm: (...fields: FormField<any, any>[]) => boolean;
 };
 export {};

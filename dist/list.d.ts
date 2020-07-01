@@ -8,13 +8,13 @@ interface ListCases<A, B> {
     Empty(): B;
 }
 export declare const List: {
-    set: <A>(list: ReadonlyArray<A>, where: Selector<A>, value: A | F1<A, A>) => ReadonlyArray<A>;
-    get: <A>(list: ReadonlyArray<A>, where: Selector<A>) => Option<A>;
-    contains: <A>(list: ReadonlyArray<A>, item: A) => boolean;
-    match: <A, B>(list: ReadonlyArray<A>, cases: ListCases<A, B>) => B;
-    isList: <A>(maybeList: any) => maybeList is ReadonlyArray<A>;
-    remove: <A>(list: ReadonlyArray<A>, itemToRemove: A) => ReadonlyArray<A>;
-    equals: <A>(list1: ReadonlyArray<A>, list2: ReadonlyArray<A>, eq?: ((a: A, b: A) => boolean) | undefined) => boolean;
-    setAndMove: <A>(a: A, where: Selector<A>, newIdx: number) => (list: ReadonlyArray<A>) => ReadonlyArray<A>;
+    set: <A>(list: List<A>, where: Selector<A>, value: A | F1<A, A>) => List<A>;
+    get: <A_1>(list: List<A_1>, where: Selector<A_1>) => Option<A_1>;
+    contains: <A_2>(list: List<A_2>, item: A_2) => boolean;
+    match: <A_3, B>(list: List<A_3>, cases: ListCases<A_3, B>) => B;
+    isList: <A_4>(maybeList: any) => maybeList is List<A_4>;
+    remove: <A_5>(list: List<A_5>, itemToRemove: A_5) => List<A_5>;
+    equals: <A_6>(list1: List<A_6>, list2: List<A_6>, eq?: ((a: A_6, b: A_6) => boolean) | undefined) => boolean;
+    setAndMove: <A_7>(a: A_7, where: Selector<A_7>, newIdx: number) => (list: List<A_7>) => List<A_7>;
 };
 export {};

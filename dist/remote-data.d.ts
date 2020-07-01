@@ -36,18 +36,18 @@ interface RemoteDataCases<E, A, B> {
 }
 export declare const RemoteData: {
     loaded: <E, A>(rd: RemoteData<E, A>) => rd is Loaded<A>;
-    pending: <E, A>(rd: RemoteData<E, A>) => rd is Pending<A>;
-    failed: <E, A>(rd: RemoteData<E, A>) => rd is Failed<E, A>;
-    unloaded: <E, A>(rd: RemoteData<E, A>) => rd is Unloaded;
-    match: <E, A, B>(rd: RemoteData<E, A>, cases: RemoteDataCases<E, A, B>) => B;
-    map: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, B>) => RemoteData<E, B>;
-    flatMap: <E, A, B>(rd: RemoteData<E, A>, f: F1<A, RemoteData<E, B>>) => RemoteData<E, B>;
-    map2: <E, A, B, C>(rd1: RemoteData<E, A>, rd2: RemoteData<E, B>, f: F2<A, B, C>) => RemoteData<E, C>;
-    data: <E, A>(rd: RemoteData<E, A>) => Option<A>;
-    toString: <E, A>(rd: RemoteData<E, A>) => string;
-    getOrElse: <E, A>(rd1: RemoteData<E, A>, fval: Lazy<A>) => A;
-    merge: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>, add: F2<A, A, A>) => RemoteData<E, A>;
-    replace: <E, A>(rd1: RemoteData<E, A>, rd2: RemoteData<E, A>) => RemoteData<E, A>;
-    getState: <E, A>(rd1: RemoteData<E, A>) => [Option<E>, Option<A>, boolean];
+    pending: <E_1, A_1>(rd: RemoteData<E_1, A_1>) => rd is Pending<A_1>;
+    failed: <E_2, A_2>(rd: RemoteData<E_2, A_2>) => rd is Failed<E_2, A_2>;
+    unloaded: <E_3, A_3>(rd: RemoteData<E_3, A_3>) => rd is Unloaded;
+    match: <E_4, A_4, B>(rd: RemoteData<E_4, A_4>, cases: RemoteDataCases<E_4, A_4, B>) => B;
+    map: <E_5, A_5, B_1>(rd: RemoteData<E_5, A_5>, f: F1<A_5, B_1>) => RemoteData<E_5, B_1>;
+    flatMap: <E_6, A_6, B_2>(rd: RemoteData<E_6, A_6>, f: F1<A_6, RemoteData<E_6, B_2>>) => RemoteData<E_6, B_2>;
+    map2: <E_7, A_7, B_3, C>(rd1: RemoteData<E_7, A_7>, rd2: RemoteData<E_7, B_3>, f: F2<A_7, B_3, C>) => RemoteData<E_7, C>;
+    data: <E_8, A_8>(rd: RemoteData<E_8, A_8>) => Option<A_8>;
+    toString: <E_9 extends {}, A_9>(rd: RemoteData<E_9, A_9>) => string;
+    getOrElse: <E_10, A_10>(rd1: RemoteData<E_10, A_10>, fval: Lazy<A_10>) => A_10;
+    merge: <E_11, A_11>(rd1: RemoteData<E_11, A_11>, rd2: RemoteData<E_11, A_11>, add: F2<A_11, A_11, A_11>) => RemoteData<E_11, A_11>;
+    replace: <E_12, A_12>(rd1: RemoteData<E_12, A_12>, rd2: RemoteData<E_12, A_12>) => RemoteData<E_12, A_12>;
+    getState: <E_13, A_13>(rd1: RemoteData<E_13, A_13>) => State<E_13, A_13>;
 };
 export {};

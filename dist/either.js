@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Either = exports.Left = exports.Right = void 0;
 exports.Right = function (value) { return ({
     isLeft: false,
     isRight: true,
